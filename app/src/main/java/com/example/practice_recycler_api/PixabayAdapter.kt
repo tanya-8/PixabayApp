@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 
 class PixabayAdapter(private val hitItems: MutableList<image>, private val listener: onClickListener):
     RecyclerView.Adapter<PixabayAdapter.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PixabayAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView= LayoutInflater.from(parent.context).
                 inflate(R.layout.recycler_item,parent,false)
         return ViewHolder(itemView)
