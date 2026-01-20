@@ -3,3 +3,13 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
 }
+buildscript {
+    dependencies {
+        // Hilt Gradle plugin (REQUIRED)
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.57.1")
+    }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}

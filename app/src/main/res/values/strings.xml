@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">practice_recycler_api</string>
     <string name="submit">Submit</string>
+    <string name="enter_your_tags">Enter your tags</string>
 </resources>
