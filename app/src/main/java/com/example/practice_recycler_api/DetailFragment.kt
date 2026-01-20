@@ -19,7 +19,6 @@ class DetailFragment: Fragment(R.layout.detail_fragment) {
             Picasso.get()
                 .load(imgurl)
                 .into(view.findViewById<ImageView>(R.id.imageView2))
-
         }
     }
 }

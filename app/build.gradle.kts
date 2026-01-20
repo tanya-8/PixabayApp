@@ -1,17 +1,34 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.example.practice_recycler_api"
     compileSdk {
-        version = release(36)
+        version = release(34)
     }
 
 //    buildFeatures {
-//        dataBinding = true
+//        viewBinding = true
 //    }
+
+    //need to read more
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/io.netty.versions.properties"
+            )
+        }
+    }
 
     defaultConfig {
         applicationId = "com.example.practice_recycler_api"
@@ -48,6 +65,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment)
+    implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,4 +81,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
+//    //dependencies for dagger hilt from here-
+    implementation(libs.hilt.android.dagger)
+    kapt(libs.hilt.android.compiler)
+    //-till here
+}
+kapt {
+    correctErrorTypes=true
 }
