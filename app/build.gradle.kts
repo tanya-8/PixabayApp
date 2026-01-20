@@ -8,9 +8,10 @@ android {
     compileSdk {
         version = release(36)
     }
-    buildFeatures {
-        dataBinding = true
-    }
+
+//    buildFeatures {
+//        dataBinding = true
+//    }
 
     defaultConfig {
         applicationId = "com.example.practice_recycler_api"

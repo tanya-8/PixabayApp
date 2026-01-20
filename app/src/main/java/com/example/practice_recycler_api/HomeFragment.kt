@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.ViewSwitcher
 import androidx.core.view.isGone
-import androidx.databinding.DataBindingUtil
+//import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.practice_recycler_api.databinding.StartFragmentBinding
+//import com.example.practice_recycler_api.databinding.StartFragmentBinding
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,38 +31,50 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 //@AndroidEntryPoint
-class HomeFragment: Fragment(), onClickListener {
-    private var _binding: StartFragmentBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
+//    private var _binding: StartFragmentBinding? = null
+//    private val binding get() = _binding!!
     private lateinit var adapter: PixabayAdapter
     private lateinit var recyclerView: RecyclerView
     private val viewModel: PixabayViewModel by viewModels()
     var query: String?="yellow"
 
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        _binding = DataBindingUtil.inflate(
+//            inflater,
+//            R.layout.start_fragment,
+//            container,
+//            false
+//        )
+//        return binding.root
+//    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.start_fragment,
-            container,
-            false
-        )
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter= PixabayAdapter(this)
-        recyclerView = binding.recyclerView
-        binding.apply {
-            vm = viewModel
-            lifecycleOwner = viewLifecycleOwner
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
-        }
+//        recyclerView = binding.recyclerView
+//        binding.apply {
+//            vm = viewModel
+//            lifecycleOwner = viewLifecycleOwner
+//            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//            recyclerView.adapter = adapter
+//        }
+
+        recyclerView=view.findViewById(R.id.recyclerView)
+        recyclerView.adapter=adapter
+        recyclerView.layoutManager= LinearLayoutManager(context)
+
         query= savedInstanceState?.getString("query")
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when(state){
@@ -70,9 +82,10 @@ class HomeFragment: Fragment(), onClickListener {
                 else-> showError()
             }
         }
-
-        binding.button.setOnClickListener {
-            val tags = binding.editTextForTags.text.toString().trim()
+        val submitB=view.findViewById<Button>(R.id.button)
+        val inputText=view.findViewById<EditText>(R.id.editTextForTags)
+        submitB.setOnClickListener {
+            val tags = inputText.text.toString().trim()
             if (tags.isNotEmpty()) query = tags
             viewModel.newSearch(query)
         }
@@ -108,8 +121,4 @@ class HomeFragment: Fragment(), onClickListener {
             .commit()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding=null
-    }
 }
