@@ -6,14 +6,17 @@ import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 import kotlin.collections.orEmpty
 
-//@HiltViewModel
-class PixabayViewModel: ViewModel() {
-    private val repo= Repository()
+@HiltViewModel
+class PixabayViewModel @Inject constructor(
+    private val repository: Repository
+): ViewModel(){
     private var isLoading=false
     private var isLastPage=false
     private var currentPage=1
@@ -33,7 +36,7 @@ class PixabayViewModel: ViewModel() {
         println("api called $num")
         num++
 
-        repo.getImageList("45834665-cd812607af12ca3f1bd5d4c19",query,currentPage,10,true,true).enqueue(object : Callback<PixbayResponse> {
+        repository.getImageList("45834665-cd812607af12ca3f1bd5d4c19",query,currentPage,10,true,true).enqueue(object : Callback<PixbayResponse> {
             override fun onResponse(
                 call: Call<PixbayResponse>,
                 response: Response<PixbayResponse>

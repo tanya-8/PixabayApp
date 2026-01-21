@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 //import com.example.practice_recycler_api.databinding.StartFragmentBinding
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
 //    private var _binding: StartFragmentBinding? = null
 //    private val binding get() = _binding!!
