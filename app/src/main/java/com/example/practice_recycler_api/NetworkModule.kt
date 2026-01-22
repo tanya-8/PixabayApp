@@ -1,6 +1,7 @@
 package com.example.practice_recycler_api
 
 import com.google.firebase.appdistribution.gradle.ApiService
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,9 @@ object NetworkModule {
     @Singleton
     fun provideApiService( retrofit: Retrofit): RetrofitInterface=
         retrofit.create(RetrofitInterface::class.java)
+
+    @Provides
+    @Singleton
+    fun provideLocationProvider(impl: DefaultLocationProvider): LocationProvider=impl
+
 }

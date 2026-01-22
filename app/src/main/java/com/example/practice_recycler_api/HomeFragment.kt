@@ -1,5 +1,6 @@
 package com.example.practice_recycler_api
 
+import android.content.Intent
 import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ViewSwitcher
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 //import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -39,6 +41,11 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
     private lateinit var recyclerView: RecyclerView
     private val viewModel: PixabayViewModel by viewModels()
     var query: String?="yellow"
+//    var a: String?=null
+//
+//    constructor(a:String,b: String,c: String){
+//        this.a  = a
+//    }
 
 //    override fun onCreateView(
 //        inflater: LayoutInflater,
@@ -58,6 +65,8 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val intent = Intent(requireContext(), LocationService::class.java)
+        ContextCompat.startForegroundService(requireContext(), intent)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -116,6 +125,7 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         map.putSerializable("itemDetail",item)
         val detailFragment= DetailFragment()
         detailFragment.arguments=map
+//        Thread.sleep(2000)
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, detailFragment)
             .addToBackStack(null)

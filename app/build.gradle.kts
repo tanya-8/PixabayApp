@@ -86,6 +86,10 @@ dependencies {
     implementation(libs.hilt.android.dagger)
     kapt(libs.hilt.android.compiler)
     //-till here
+    //google location services
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    //for adding coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
 kapt {
     correctErrorTypes=true
