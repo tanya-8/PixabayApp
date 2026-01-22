@@ -17,6 +17,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LocationService: Service() {
+    //defines how my service lifecycle callbacks would look like
+    //also creates notification but need to check more on that
     @Inject
     lateinit var locationProvider: LocationProvider
 

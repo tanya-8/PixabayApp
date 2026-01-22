@@ -16,6 +16,7 @@ class DefaultLocationProvider @Inject constructor(
     @ApplicationContext private val context: Context
 ) : LocationProvider {
     // locationProvider here is an interface and default location provider extends upon that interface
+    // and location services is used here
     private val fusedClient =
         LocationServices.getFusedLocationProviderClient(context)
 

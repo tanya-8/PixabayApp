@@ -42,6 +42,6 @@ class MainActivity :AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         Log.d("lifecycle activity", "activity paused")
-        Thread.sleep(700000)
+//        Thread.sleep(700000)
     }
 }

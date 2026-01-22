@@ -65,8 +65,10 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // calling of :Location service
         val intent = Intent(requireContext(), LocationService::class.java)
         ContextCompat.startForegroundService(requireContext(), intent)
+    // super is the og method in activities it needs it be called ow it may cause crashes or or crash or not save state
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
