@@ -21,7 +21,7 @@ class PixabayViewModel @Inject constructor(
     private var isLastPage=false
     private var currentPage=1
     private var num=0
-
+//    private var currentList: MutableList<image> = mutableListOf()
     private val _state= MutableLiveData<ApiState>()
     val state: LiveData<ApiState>
         get()=_state
@@ -47,12 +47,7 @@ class PixabayViewModel @Inject constructor(
                         isLastPage = true
                         Log.d("Pagination", "Last page reached")
                     } else {
-                        val currentList=when(val state=_state.value){
-                            is ApiState.Success->state.hitItems
-                            else -> emptyList()
-                        }
-                        val updatedList = currentList + newImages
-                        _state.value = ApiState.Success(updatedList)
+                        _state.value = ApiState.Success(newImages)
                         currentPage++
                     }
                     isLoading=false
@@ -75,7 +70,7 @@ class PixabayViewModel @Inject constructor(
         isLastPage=false
         isLoading=false
         currentPage=1
-        _state.value= ApiState.Success(emptyList())
+        //_state.value= ApiState.Success(emptyList())
         fetchImageList(query)
     }
 

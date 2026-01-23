@@ -17,10 +17,15 @@ class PixabayAdapter(private val listener: onClickListener):
         return ViewHolder(itemView)
     }
     fun setData(list: List<image>){
-        items.clear()
         items.addAll(list)
         notifyDataSetChanged()
     }
+
+    fun clearItems() {
+        items.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currInfo=items[position]
         val imgurl= currInfo.imgURL

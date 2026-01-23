@@ -28,7 +28,12 @@ class MainActivity :AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+//        val preference=getSharedPreferences("My Search Preferences", MODE_PRIVATE)
+//        val editor= preference.edit()
+        // this can also be done in fragment
+
         addFragment(HomeFragment())
+
     }
     private fun addFragment(fragment: Fragment){
         val fragmentManager=supportFragmentManager

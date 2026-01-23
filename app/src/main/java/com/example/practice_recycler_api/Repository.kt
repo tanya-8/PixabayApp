@@ -2,6 +2,7 @@ package com.example.practice_recycler_api
 import com.google.firebase.appdistribution.gradle.ApiService
 import javax.inject.Inject
 
+
 class Repository @Inject constructor(
     private val retrofitInterface: RetrofitInterface
 ){
@@ -11,7 +12,7 @@ class Repository @Inject constructor(
         page: Int,
         perPage: Int,
         imagetype: Boolean,
-        safeSearch: Boolean) =retrofitInterface.getImages(apiKey,query,page,perPage,imagetype,safeSearch)
+        safeSearch: Boolean)=retrofitInterface.getImages(apiKey,query,page,perPage,imagetype,safeSearch)
 
 //    fun getImageList(
 //        apiKey: String,

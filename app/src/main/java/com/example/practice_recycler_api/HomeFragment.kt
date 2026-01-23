@@ -1,5 +1,6 @@
 package com.example.practice_recycler_api
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.Movie
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ViewSwitcher
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 //import androidx.databinding.DataBindingUtil
@@ -41,6 +43,9 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
     private lateinit var recyclerView: RecyclerView
     private val viewModel: PixabayViewModel by viewModels()
     var query: String?="yellow"
+    private lateinit var last : String
+    private lateinit var secondLast : String
+    private var searchNum=1
 //    var a: String?=null
 //
 //    constructor(a:String,b: String,c: String){
@@ -66,7 +71,9 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // calling of :Location service
-        val intent = Intent(requireContext(), LocationService::class.java)
+        val intent = Intent(requireContext(), LocationService::class.java).apply {
+            putExtra("NAME", "value")
+        }
         ContextCompat.startForegroundService(requireContext(), intent)
     // super is the og method in activities it needs it be called ow it may cause crashes or or crash or not save state
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -90,16 +97,54 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         query= savedInstanceState?.getString("query")
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when(state){
-                is ApiState.Success->(adapter.setData(state.hitItems))
-                else-> showError()
+                is ApiState.Success->{
+                    Log.d("test","The state hitItems is ${state.hitItems}")
+                    (adapter.setData(state.hitItems))
+
+                }
+                else->{
+                    Log.d("test","The state in other cases is ${state}")
+                    showError()
+
+                }
             }
         }
         val submitB=view.findViewById<Button>(R.id.button)
         val inputText=view.findViewById<EditText>(R.id.editTextForTags)
+
+        // setting shared preferences method
+        val preference= activity?.getSharedPreferences("My Search Preferences", MODE_PRIVATE )
+        //setting the editor which actually sets key value pairs
+        val editor= preference?.edit()
+
+
         submitB.setOnClickListener {
             val tags = inputText.text.toString().trim()
             if (tags.isNotEmpty()) query = tags
+            adapter.clearItems()
             viewModel.newSearch(query)
+            if(searchNum==1){
+                //setting both to first query
+               editor?.putString("lastQuery", query)
+                editor?.putString("secondLastQuery", query)
+                editor?.commit()
+            }
+            else{
+                //setting second last to last and the latest one as last
+                val last=preference?.getString("lastQuery","yellow")
+                editor?.putString("lastQuery", query)
+                editor?.putString("secondLastQuery", last)
+                editor?.commit()
+            }
+            searchNum++
+
+        }
+        //calling the second last query to be submitted again to viewmodel after clearing the adapter
+        val retrieveB=view.findViewById<Button>(R.id.buttonToRetrieve)
+        retrieveB.setOnClickListener {
+            val lastQuery= preference?.getString("secondLastQuery","yellow")
+            adapter.clearItems()
+            viewModel.newSearch(lastQuery)
         }
 
         recyclerView.addOnScrollListener(

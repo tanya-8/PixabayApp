@@ -1,5 +1,6 @@
 package com.example.practice_recycler_api
 
+import android.app.IntentService
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -23,6 +24,11 @@ class LocationService: Service() {
     lateinit var locationProvider: LocationProvider
 
     override fun onBind(p0: Intent?): IBinder?=null
+
+//    override fun onHandleIntent(p0: Intent?) {
+//        Log.d("Location Services","Service created 1")
+//        p0.getIntExtra("NAME4")
+//    }
 
     override fun onCreate() {
         super.onCreate()
