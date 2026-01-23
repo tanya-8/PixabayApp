@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 import kotlin.concurrent.thread
 
 @AndroidEntryPoint
@@ -28,11 +29,13 @@ class MainActivity :AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-//        val preference=getSharedPreferences("My Search Preferences", MODE_PRIVATE)
-//        val editor= preference.edit()
-        // this can also be done in fragment
 
         addFragment(HomeFragment())
+
+//        val preference=getSharedPreferences("My Search Preferences", MODE_PRIVATE)
+//        val lastQuery=preference.getString("lastQuery", "Error occurred")
+//        Log.d("check SP", "last query is: $lastQuery")
+        // this can also be done in fragment but we have checked that it can be referenced to in the main activity also
 
     }
     private fun addFragment(fragment: Fragment){

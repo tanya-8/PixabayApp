@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 //import com.example.practice_recycler_api.databinding.StartFragmentBinding
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,12 +101,10 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
                 is ApiState.Success->{
                     Log.d("test","The state hitItems is ${state.hitItems}")
                     (adapter.setData(state.hitItems))
-
                 }
                 else->{
                     Log.d("test","The state in other cases is ${state}")
                     showError()
-
                 }
             }
         }
@@ -137,7 +136,6 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
                 editor?.commit()
             }
             searchNum++
-
         }
         //calling the second last query to be submitted again to viewmodel after clearing the adapter
         val retrieveB=view.findViewById<Button>(R.id.buttonToRetrieve)

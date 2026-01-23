@@ -90,6 +90,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     //for adding coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    //for converting to json
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 kapt {
     correctErrorTypes=true
