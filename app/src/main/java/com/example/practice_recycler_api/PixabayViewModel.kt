@@ -15,12 +15,14 @@ import kotlin.collections.orEmpty
 
 @HiltViewModel
 class PixabayViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val fileManager: FileManager
 ): ViewModel(){
     private var isLoading=false
     private var isLastPage=false
     private var currentPage=1
     private var num=0
+    private var firstCall=1
 //    private var currentList: MutableList<image> = mutableListOf()
     private val _state= MutableLiveData<ApiState>()
     val state: LiveData<ApiState>
@@ -47,8 +49,15 @@ class PixabayViewModel @Inject constructor(
                         isLastPage = true
                         Log.d("Pagination", "Last page reached")
                     } else {
+
                         _state.value = ApiState.Success(newImages)
                         currentPage++
+
+                        if(firstCall==1){
+                            fileManager.saveFile("pixabaySecondResponse.json", newImages)
+                            Log.d("file saving", "this message was called")
+                            firstCall++
+                        }
                     }
                     isLoading=false
                 } else {
