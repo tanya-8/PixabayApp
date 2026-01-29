@@ -29,7 +29,6 @@ class MainActivity :AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         addFragment(HomeFragment())
 
 //        val preference=getSharedPreferences("My Search Preferences", MODE_PRIVATE)

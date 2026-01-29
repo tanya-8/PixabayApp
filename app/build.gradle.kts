@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.practice_recycler_api"
     compileSdk {
-        version = release(34)
+        version = release(35)
     }
 
 //    buildFeatures {
@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment)
     implementation(libs.firebase.appdistribution.gradle)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,16 +83,19 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
-//    //dependencies for dagger hilt from here-
+//    //dependencies for dagger hilt
     implementation(libs.hilt.android.dagger)
     kapt(libs.hilt.android.compiler)
-    //-till here
     //google location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     //for adding coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     //for converting to json
     implementation("com.google.code.gson:gson:2.10.1")
+    //room dependencies
+    val room_version = "2.5.0"
+    implementation ("androidx.room:room-ktx:$room_version")
+    kapt( "androidx.room:room-compiler:$room_version")
 }
 kapt {
     correctErrorTypes=true
