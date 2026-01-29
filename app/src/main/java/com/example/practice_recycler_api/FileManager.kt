@@ -20,7 +20,7 @@ class FileManager @Inject constructor (
 //            it.write(json.toByteArray())
 //        }
 
-        val file= File(context.filesDir, fileName)
-                file.writeText(json)
+//        val file= File(context.filesDir, fileName)
+//                file.writeText(json)
     }
 }

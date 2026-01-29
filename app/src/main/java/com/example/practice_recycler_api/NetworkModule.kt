@@ -1,10 +1,13 @@
 package com.example.practice_recycler_api
 
+import android.content.Context
+import androidx.room.Room
 import com.google.firebase.appdistribution.gradle.ApiService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,8 +30,22 @@ object NetworkModule {
     fun provideApiService( retrofit: Retrofit): RetrofitInterface=
         retrofit.create(RetrofitInterface::class.java)
 
+//    @Provides
+//    @Singleton
+//    fun provideLocationProvider(impl: DefaultLocationProvider): LocationProvider=impl
+
     @Provides
     @Singleton
-    fun provideLocationProvider(impl: DefaultLocationProvider): LocationProvider=impl
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ): ImageDatabase=
+        Room.databaseBuilder(
+            context,
+            ImageDatabase::class.java,
+            "image_db"
+        ).build()
+
+    @Provides
+    fun provideDao(db: ImageDatabase): ImageDAO= db.dao
 
 }

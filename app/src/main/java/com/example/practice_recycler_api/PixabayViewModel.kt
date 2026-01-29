@@ -6,7 +6,15 @@ import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +36,30 @@ class PixabayViewModel @Inject constructor(
     val state: LiveData<ApiState>
         get()=_state
 
+    fun insertToDB(image: image){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.insertToDB(image)
+        }
+    }
+    fun deleteFromDB(image: image){
+        viewModelScope.launch(Dispatchers.IO) { val rows=repository.deleteFromDB(image)
+        Log.d("database operation", "$rows no. of rows deleted")}
+    }
+    fun deleteDB(){
+        viewModelScope.launch (Dispatchers.IO){ repository.deleteDB() }
+    }
+//    fun isSavedToDB(id: String): Boolean{
+//        var isSaved=false
+//        viewModelScope.launch (Dispatchers.IO){isSaved= repository.isSavedToDB(id) }
+//        return isSaved
+//    }
 
+    val allSavedImages: StateFlow<List<image>> =
+            repository.getAllImages().stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(2000),
+                emptyList()
+            )
     fun fetchImageList(query: String?){
 
         if(isLoading||isLastPage) return
@@ -43,6 +74,7 @@ class PixabayViewModel @Inject constructor(
                 call: Call<PixbayResponse>,
                 response: Response<PixbayResponse>
             ) {
+                Log.d("API call was made", "api was hit ")
                 if (response.isSuccessful) {
                     val newImages = response.body()?.hits.orEmpty()
                     if (newImages.isEmpty()) {

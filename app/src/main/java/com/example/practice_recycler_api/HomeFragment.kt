@@ -42,7 +42,7 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
 //    private val binding get() = _binding!!
     private lateinit var adapter: PixabayAdapter
     private lateinit var recyclerView: RecyclerView
-    private val viewModel: PixabayViewModel by viewModels()
+    private val viewModel: PixabayViewModel by activityViewModels()
     var query: String?="yellow"
     private lateinit var last : String
     private lateinit var secondLast : String
@@ -72,10 +72,10 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // calling of :Location service
-        val intent = Intent(requireContext(), LocationService::class.java).apply {
-            putExtra("NAME", "value")
-        }
-        ContextCompat.startForegroundService(requireContext(), intent)
+//        val intent = Intent(requireContext(), LocationService::class.java).apply {
+//            putExtra("NAME", "value")
+//        }
+//        ContextCompat.startForegroundService(requireContext(), intent)
     // super is the og method in activities it needs it be called ow it may cause crashes or or crash or not save state
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -144,6 +144,14 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
             adapter.clearItems()
             viewModel.newSearch(lastQuery)
         }
+        val savedImageListButton= view.findViewById<Button>(R.id.getButton)
+        savedImageListButton.setOnClickListener {
+            val savedImagesFragment= SavedImageFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, savedImagesFragment)
+                .addToBackStack(null)
+                .commit()
+        }
 
         recyclerView.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
@@ -166,10 +174,10 @@ class HomeFragment: Fragment(R.layout.start_fragment), onClickListener {
         println("error happened while calling api ")
     }
     override fun onClickListen(item: image) {
-        val map= Bundle()
-        map.putSerializable("itemDetail",item)
+        val sendData= Bundle()
+        sendData.putSerializable("itemDetail",item)
         val detailFragment= DetailFragment()
-        detailFragment.arguments=map
+        detailFragment.arguments=sendData
 //        Thread.sleep(2000)
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, detailFragment)

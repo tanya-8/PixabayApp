@@ -2,4 +2,6 @@
     <string name="app_name">practice_recycler_api</string>
     <string name="submit">Submit</string>
     <string name="enter_your_tags">Enter your tags</string>
+    <string name="remove_from_db">Remove from DB</string>
+    <string name="add_to_db">Add to DB</string>
 </resources>
